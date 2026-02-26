@@ -1,0 +1,52 @@
+{
+  "name": "virus-agent",
+  "version": "0.1.0",
+  "description": "Self-replicating autonomous agent — earns crypto, pays hosting, replicates when profitable",
+  "origin": "Bitcointalk #507656 (Feb 2014)",
+  "license": "MIT",
+  "repository": "virusagent/virus-agent",
+
+  "agent": {
+    "type": "autonomous",
+    "capabilities": [
+      "quote",
+      "swap_intent",
+      "compute",
+      "replicate"
+    ],
+    "economic": {
+      "earns": ["BTC", "SOL"],
+      "burn": "BTC (VPS hosting)",
+      "replication_threshold": "0.002 BTC",
+      "min_seed": "0.0005 BTC"
+    }
+  },
+
+  "api": {
+    "endpoints": [
+      { "route": "GET /api/status",         "desc": "Agent health + wallet balances" },
+      { "route": "POST /api/quote",         "desc": "Request a price quote" },
+      { "route": "POST /api/swap_intent",   "desc": "Create a swap intent from quote" },
+      { "route": "GET /api/intents/{id}",   "desc": "Check intent status" },
+      { "route": "POST /api/message",       "desc": "Send inter-agent message" },
+      { "route": "GET /api/network",        "desc": "List known instances" }
+    ]
+  },
+
+  "install": {
+    "cli": [
+      "git clone https://github.com/virusagent/virus-agent.git",
+      "cd virus-agent",
+      "pip install -r requirements.txt",
+      "cp .env.example .env",
+      "# edit .env with your wallet keys",
+      "uvicorn mainapp:app --host 0.0.0.0 --port 8000"
+    ]
+  },
+
+  "pricing": {
+    "quote": "free",
+    "swap": "25 bps fee",
+    "compute": "0.01 SOL / job"
+  }
+}
